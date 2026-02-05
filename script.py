@@ -92,20 +92,19 @@ for frame in range(max_frames):
     x += curr_vx
     y += curr_vy
 
+    bounced = False
     if x <= 0 or x >= h_travel:
         curr_vx = -curr_vx
         x = max(0, min(x, h_travel))
-        if COLOUR_CYCLE:
-            current_colour = random.choice([c for c in COLOURS if c not in recent_colours])
-            recent_colours.append(current_colour)
-            recent_colours = recent_colours[-2:]
+        bounced = True
     if y <= 0 or y >= v_travel:
         curr_vy = -curr_vy
         y = max(0, min(y, v_travel))
-        if COLOUR_CYCLE:
-            current_colour = random.choice([c for c in COLOURS if c not in recent_colours])
-            recent_colours.append(current_colour)
-            recent_colours = recent_colours[-2:]
+        bounced = True
+    if bounced and COLOUR_CYCLE:
+        current_colour = random.choice([c for c in COLOURS if c not in recent_colours])
+        recent_colours.append(current_colour)
+        recent_colours = recent_colours[-2:]
 
 output_path = os.path.join(os.path.dirname(__file__), EXPORT_FILENAME)
 
