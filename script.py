@@ -67,7 +67,9 @@ x, y = 0.0, 0.0
 curr_vx, curr_vy = float(vx), float(vy)
 
 frames = []
+recent_colours = []
 current_colour = random.choice(COLOURS)
+recent_colours.append(current_colour)
 
 for frame in range(max_frames):
     frame_img = Image.new("RGBA", (canvas_width, canvas_height), (0, 0, 0, 0))
@@ -94,12 +96,16 @@ for frame in range(max_frames):
         curr_vx = -curr_vx
         x = max(0, min(x, h_travel))
         if COLOUR_CYCLE:
-            current_colour = random.choice([c for c in COLOURS if c != current_colour])
+            current_colour = random.choice([c for c in COLOURS if c not in recent_colours])
+            recent_colours.append(current_colour)
+            recent_colours = recent_colours[-2:]
     if y <= 0 or y >= v_travel:
         curr_vy = -curr_vy
         y = max(0, min(y, v_travel))
         if COLOUR_CYCLE:
-            current_colour = random.choice([c for c in COLOURS if c != current_colour])
+            current_colour = random.choice([c for c in COLOURS if c not in recent_colours])
+            recent_colours.append(current_colour)
+            recent_colours = recent_colours[-2:]
 
 output_path = os.path.join(os.path.dirname(__file__), EXPORT_FILENAME)
 
