@@ -8,4 +8,4 @@ Also modify the scale parameter to fit your input image
 
 Huzzah
 
-![til]()./bounce.gif)
+![til](./bounce.gif)
